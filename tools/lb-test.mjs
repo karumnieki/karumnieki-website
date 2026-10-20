@@ -29,7 +29,7 @@ for (const p of slots.photos) {
 }
 const idOf = (href) => path.basename(href).replace(/-(hero|parmums|section|companion|gallery|lightbox)-\d+\.webp$/, '');
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const ctx = await browser.newContext({
   viewport: { width, height: width < 768 ? 844 : 900 },
   deviceScaleFactor: width < 1440 ? 2 : 1,

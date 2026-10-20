@@ -69,7 +69,10 @@ const BAR_AFTER_SCROLL = () => {
   return { present: true, visible, position: cs.position, top: Math.round(r.top), bottom: Math.round(r.bottom), height: Math.round(r.height), scrollY: Math.round(scrollY) };
 };
 
-const browser = await chromium.launch({ headless: true });
+// Unhinted text: on Linux, headless Chromium otherwise rounds every glyph width to a whole pixel, so lines wrap
+// differently from Windows and the page heights drift (a test line of 18px Source Sans 3: 653px hinted, 647.3px
+// unhinted, 647.5px on Windows). The flag changes nothing on Windows. Every tool launches with it.
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const results = { url, tag, capturedAt: new Date().toISOString(), widths: {} };
 for (const w of widths) {
   const ctx = await browser.newContext({

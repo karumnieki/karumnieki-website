@@ -51,7 +51,7 @@ function fixture(link = GOOGLE) {
   };
 }
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 
 async function visit(label, answer, { swap = true } = {}) {
   const ctx = await answered(await browser.newContext({ viewport: { width: 1440, height: 900 } }));

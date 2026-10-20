@@ -40,7 +40,7 @@ const pages = [['lv', LV], ['en', EN]];
 const other = { lv: 'en', en: 'lv' };
 const base = { lv: LV, en: EN };
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const newPage = async (w, lang) => {
   const ctx = await browser.newContext({
     viewport: { width: w, height: w < 768 ? 844 : 900 }, deviceScaleFactor: 1,

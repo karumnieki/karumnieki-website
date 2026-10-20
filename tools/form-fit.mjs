@@ -15,7 +15,7 @@ const { chromium } = require('playwright-core');
 const argv = process.argv.slice(2);
 const shots = (argv.find(a => a.startsWith('--shots=')) || '').slice(8);
 const [url, sizesArg = '1920x1080,1536x864,1440x900,1366x768,1280x720,390x844'] = argv.filter(a => !a.startsWith('--'));
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 for (const s of sizesArg.split(',')) {
   const [w, h] = s.split('x').map(Number);
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 768, hasTouch: w < 768, deviceScaleFactor: 1 });

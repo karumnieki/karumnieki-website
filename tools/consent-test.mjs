@@ -24,7 +24,7 @@ const GOOGLE = /google\.com|googletagmanager\.com|google-analytics\.com|gstatic\
 const failures = [];
 const notes = [];
 const fail = m => failures.push(m);
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 
 async function open(w, h, { choice, href = url } = {}) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 768, hasTouch: w < 768, deviceScaleFactor: 1 });

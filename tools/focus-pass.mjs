@@ -17,7 +17,7 @@ const outdir = path.resolve(outdirArg);
 fs.mkdirSync(outdir, { recursive: true });
 const width = Number(widthArg);
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const ctx = await browser.newContext({
   viewport: { width, height: width < 768 ? 844 : 900 },
   deviceScaleFactor: 1, isMobile: width < 768, hasTouch: width < 768, locale: /\/en\//.test(url) ? 'en-GB' : 'lv-LV',

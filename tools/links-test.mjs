@@ -32,7 +32,7 @@ const fail = (why) => { failures.push(why); console.log('  FAIL ' + why); };
 const ok = (what) => console.log('  ok   ' + what);
 const norm = (s) => s.replace(/\s+/g, ' ');
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, locale: 'lv-LV' });
 await answered(ctx);
 const page = await ctx.newPage();

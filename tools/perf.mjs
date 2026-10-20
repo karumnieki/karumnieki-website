@@ -27,7 +27,7 @@ const PROFILES = {
 };
 
 const port = 9339;
-const browser = await chromium.launch({ headless: true, args: ['--remote-debugging-port=' + port] });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none', '--remote-debugging-port=' + port] });
 const summary = {};
 for (const name of profilesArg.split(',')) {
   const res = await lighthouse(url, { port, output: 'json', logLevel: 'error', onlyCategories: all ? ['performance', 'accessibility', 'best-practices', 'seo'] : ['performance'] }, {

@@ -19,7 +19,7 @@ const WIDTHS = (pos[1] || '320,340,360,375,390,412,430,600,768,900,1024,1280,144
 const noFallback = args.includes('--no-fallback');
 const LIMIT = 0.05;
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const results = [];
 for (const [lang, url] of [['lv', LV], ['en', LV + 'en/']]) {
   for (const w of WIDTHS) {

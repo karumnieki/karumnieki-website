@@ -14,7 +14,7 @@ const { chromium } = require('playwright-core');
 const WEB = fileURLToPath(new URL('../photos/web', import.meta.url)); // the photo masters, not in the repo
 const svgText = fs.readFileSync(path.join(WEB, 'logo.svg'), 'utf8');
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const page = await browser.newPage({ viewport: { width: 1400, height: 1600 }, deviceScaleFactor: 1 });
 await page.setContent('<!doctype html><html><body style="margin:0;background:transparent"><div id="host"></div></body></html>');
 

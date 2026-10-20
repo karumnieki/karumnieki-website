@@ -29,7 +29,7 @@ const PROFILES = profArg ? profArg.slice(11).split(',').map(s => { const [w, h, 
   { name: 'desktop1920x1', w: 1920, h: 1080, dpr: 1 },
 ];
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const out = {};
 for (const [lang, url] of [['lv', LV], ['en', LV + 'en/']]) {
   for (const p of PROFILES) {

@@ -50,6 +50,11 @@ on 8477 can stay open. Run it after every change. What it checks:
 Every browser check except `shoot.mjs` and `consent-test.mjs` runs as a visitor who has already said no to cookies
 (`tools/visitor.mjs`), so the banner never covers what they click.
 
+Every tool starts Chromium with `--font-render-hinting=none`. Without it, Chromium on Linux rounds each glyph's width
+to a whole pixel, lines wrap differently from Windows and macOS on a phone-width page, and the page heights, the
+banner check and the font-swap check drift. With it, Linux gives the same page heights as Windows (checked on
+2026-10-20 at all four widths, both languages).
+
 `npm run test:online` adds `links-test.mjs`, which opens every outbound link (Google reviews, Facebook, Maps, Waze,
 WhatsApp) and checks it lands where it says. It needs the internet, and those sites change their pages, so read a
 FAIL by hand before editing anything. `npm run test:perf` adds a Lighthouse report.

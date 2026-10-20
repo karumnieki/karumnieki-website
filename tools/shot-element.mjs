@@ -7,7 +7,7 @@ const { chromium } = require('playwright-core');
 const [url, selector, out, widthArg = '1440', waitArg = '4000'] = process.argv.slice(2);
 if (!url || !selector || !out) { console.error('usage: node shot-element.mjs <url> <selector> <out.png> [width] [waitMs]'); process.exit(2); }
 const width = Number(widthArg);
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 const ctx = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 900 }, deviceScaleFactor: width < 1440 ? 2 : 1, isMobile: width < 768, hasTouch: width < 768, locale: 'lv-LV' });
 const page = await ctx.newPage();
 const bad = [];

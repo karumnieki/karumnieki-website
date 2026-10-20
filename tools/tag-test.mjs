@@ -25,7 +25,7 @@ const EVENTS = ['phone_click', 'whatsapp_click', 'share', 'generate_lead'];
 const failures = [];
 const notes = [];
 
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true, args: ['--font-render-hinting=none'] });
 
 async function visit(label, consent, { swapId = true } = {}) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
