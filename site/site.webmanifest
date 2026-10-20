@@ -1,0 +1,13 @@
+{
+  "name": "Kārumnieki, viesu nams pie Siguldas",
+  "short_name": "Kārumnieki",
+  "lang": "lv",
+  "start_url": "./",
+  "display": "browser",
+  "theme_color": "#f4eee3",
+  "background_color": "#f4eee3",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

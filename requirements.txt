@@ -1,0 +1,5 @@
+# The test gate (tools/lint.py, tools/parity.py, tools/serve.py) and tools/build.py need only the Python 3 standard
+# library. These are for the photo tools (make-icons.py, sync-assets.py, smaller-files.py). logo-wordmark.py also
+# needs resvg_py.
+Pillow>=10
+numpy>=1.26

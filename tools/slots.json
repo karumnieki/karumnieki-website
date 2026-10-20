@@ -1,0 +1,663 @@
+{
+  "_doc": "Binding table for sync-assets.py. Teritorija is ONE photograph and nothing else (2026-09-09). Filenames: <id>-<role>-<size>.webp; the role tag in a filename is historical. Two sizes are deliberately not round: dikis-mezs ships 1520 (exactly 2x its 760px crop) and K62 ships 2400 (exactly 2x its 1200px crop). When a web file is missing, the ORIGINAL is transcoded under that exact filename and listed in stand-ins.md. Paths are relative to photos/. min_crop values are binding floors. Since 2026-09-15: K25 out of Ara (8 tiles), K09 in first and K10 back in Otrais stavs (8 tiles, K09 served from its section file with its binding floor as tile attributes). no_balk was removed 2026-09-09: it is the autumn dawn version of the SAME view as the Teritorija lead E01, from the same vantage point, so with E01 in the section it read as a duplicate.",
+  "photos": [
+    {
+      "slot": "hero",
+      "id": "K21",
+      "role": "hero",
+      "sizes": [
+        1600,
+        3200
+      ],
+      "original": "originals/K21_B_111208.jpg",
+      "note": "phone crop object-position 30% 50%; only the horizontal term acts at phone aspect"
+    },
+    {
+      "slot": "par-mums",
+      "id": "karumnie",
+      "role": "parmums",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        2000,
+        3200
+      ],
+      "original": "old-site/karumnie.jpg"
+    },
+    {
+      "slot": "svinibas",
+      "id": "K62",
+      "role": "section",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        2400
+      ],
+      "original": "originals-batchD\\K62.jpg",
+      "note": "NEW 2026-09-09. Replaces K38, which led on an empty hall in tungsten light. Precropped locally to 3:2 (top 15, bottom 35), which also removed the handbag on the near bench, so no model step was needed. 2400 is exactly 2x the 1200px crop"
+    },
+    {
+      "slot": "svinibas-companion",
+      "id": "K61",
+      "role": "companion",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        3200
+      ],
+      "original": "originals-batchD/K61.jpg",
+      "note": "new 2026-09-07, replaces K24; 3200 file is 2400x3200"
+    },
+    {
+      "slot": "naksnosana",
+      "id": "K09",
+      "role": "section",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        3200
+      ],
+      "original": "originals/K09_A_110445-1.jpg",
+      "min_crop": {
+        "right": 6,
+        "bottom": 4
+      },
+      "caption": "Guļamistaba ar koka gultu",
+      "note": "Since 2026-09-15 the same 1600 file is also the first Otrais stavs gallery tile, so the floor binds in the tile (zoom window) and in the lightbox (data-crop-right + data-crop-bottom); lb-test.mjs reads min_crop from here and asserts both."
+    },
+    {
+      "slot": "naksnosana-inline",
+      "id": "K12",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals/K12_A_110445-4.jpg",
+      "note": "same file serves gallery 12"
+    },
+    {
+      "slot": "pirts",
+      "id": "K32",
+      "role": "section",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        2000,
+        3200
+      ],
+      "original": "originals/K32_B_111211-1.jpg"
+    },
+    {
+      "slot": "pirts-companion",
+      "id": "pirts_6",
+      "role": "companion",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        3200
+      ],
+      "original": "old-site/pirts_6.jpg"
+    },
+    {
+      "slot": "teritorija (PRIMARY)",
+      "id": "E01",
+      "role": "section",
+      "sizes": [
+        900,
+        1891
+      ],
+      "original": "originals-batchE/E01_dikis-lauks.webp",
+      "note": "The only picture in the section (2026-09-09). It is the one photograph that delivers all three nouns in the heading: the pond, the meadow and the sports field (a football goal and a volleyball post are both legible at the left of the treeline). 1891x831, so it ships at its own size and a 900 step, never upscaled. It keeps its native 2.276:1 frame because a 2:1 crop loses either the goal or the pond."
+    },
+    {
+      "slot": "kontakti",
+      "id": "K27",
+      "role": "section",
+      "sizes": [
+        800,
+        1200,
+        1600,
+        2000,
+        3200
+      ],
+      "original": "originals/K27_B_111210-4.jpg"
+    },
+    {
+      "slot": "gallery-01",
+      "id": "K67",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals-batchD\\K67.jpg",
+      "caption": "Zāle, klāta svinībām"
+    },
+    {
+      "slot": "gallery-02",
+      "id": "zale_10",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\zale_10.jpg",
+      "caption": "Zāle dienas gaismā ar skatu uz bērziem",
+      "min_crop": {
+        "bottom": 22
+      }
+    },
+    {
+      "slot": "gallery-03",
+      "id": "K38",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K38_C_160553-1.jpg",
+      "caption": "Zāle un virtuve dienas gaismā",
+      "min_crop": {
+        "right": 14,
+        "baked": true
+      }
+    },
+    {
+      "slot": "gallery-04",
+      "id": "K39",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K39_C_160553-2.jpg",
+      "caption": "Virtuve viesiem"
+    },
+    {
+      "slot": "gallery-05",
+      "id": "K37",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K37_C_160553.jpg",
+      "caption": "Kamīns zāles galā"
+    },
+    {
+      "slot": "gallery-06",
+      "id": "zale_1",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\zale_1.jpg",
+      "caption": "Vakara noskaņa zālē"
+    },
+    {
+      "slot": "gallery-07",
+      "id": "zale_3",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\zale_3.jpg",
+      "caption": "Zāle un virtuve vakara gaismā"
+    },
+    {
+      "slot": "gallery-08",
+      "id": "K43",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals-batchD\\K43.jpg",
+      "caption": "Svinības zālē ziemā"
+    },
+    {
+      "slot": "gallery-09",
+      "id": "pirts_1",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\pirts_1.jpg",
+      "caption": "Atpūtas telpa: kamīns, duša un pirts durvis"
+    },
+    {
+      "slot": "gallery-10",
+      "id": "pirts_6",
+      "role": "companion",
+      "sizes": [
+        800,
+        1200,
+        1600
+      ],
+      "original": "old-site\\pirts_6.jpg",
+      "caption": "Pirts uz malkas pirmajā stāvā",
+      "note": "tile reuses the existing companion file, so it costs no extra bytes"
+    },
+    {
+      "slot": "gallery-11",
+      "id": "pirts_4",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\pirts_4.jpg",
+      "caption": "Atpūtas telpa pie pirts"
+    },
+    {
+      "slot": "gallery-12",
+      "id": "pirts_5",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\pirts_5.jpg",
+      "caption": "Duša pie pirts"
+    },
+    {
+      "slot": "gallery-13",
+      "id": "K18",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K18_A_110446-4.jpg",
+      "caption": "Guļamistaba ar skatu uz bērzu mežu"
+    },
+    {
+      "slot": "gallery-14",
+      "id": "K06",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K06_A_110444-4.jpg",
+      "caption": "Istaba ar jumta logu un skatu uz mežu"
+    },
+    {
+      "slot": "gallery-15 (K10)",
+      "id": "K10",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K10_A_110445-2.jpg",
+      "caption": "Gaišā istaba ar ķieģeļu stabu",
+      "note": "Back on the page 2026-09-15 with its approved top-12 crop, fourth in Otrais stavs, so the group is eight tiles once K09 opens it. Held out 2026-09-11 to 2026-09-15."
+    },
+    {
+      "slot": "gallery-17",
+      "id": "K11",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K11_A_110445-3.jpg",
+      "caption": "Dušas kabīne otrajā stāvā"
+    },
+    {
+      "slot": "gallery-17",
+      "id": "K12",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K12_A_110445-4.jpg",
+      "caption": "Sarkanā vannas istaba"
+    },
+    {
+      "slot": "gallery-18",
+      "id": "dzakuzi",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "old-site\\Piedavajums_dzakuzi.jpg",
+      "caption": "Džakuzi otrajā stāvā",
+      "note": "NEW 2026-09-11: the whirlpool bath in the red bathroom. Sixth-pass file (1200x800 from the old site's 800x533 frame, the model's own 1536 px output resized, no AI upscale). Spelling per tezaurs.lv: džakuzi, indeclinable."
+    },
+    {
+      "slot": "gallery-19",
+      "id": "K36",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K36_B_111211.jpg",
+      "caption": "Terase un balkons"
+    },
+    {
+      "slot": "gallery-20",
+      "id": "dikis-mezs",
+      "role": "section",
+      "sizes": [
+        760,
+        1520
+      ],
+      "original": "old-site\\Piedavajums_dikis-mezs.jpg",
+      "caption": "Dīķis, kurā atspoguļojas debesis",
+      "note": "Left the Teritorija section 2026-09-09, when that section became one photograph and nothing else. Kept in the gallery so no approved asset is wasted; it is still the best of the five grass-and-water frames."
+    },
+    {
+      "slot": "gallery-21",
+      "id": "K30",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K30_B_111210-7.jpg",
+      "caption": "Kubuls uz sava klāja"
+    },
+    {
+      "slot": "gallery-22 (F01, the grill)",
+      "id": "F01",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals-batchF\\F01_grils.png",
+      "caption": "Grils pļavas malā",
+      "note": "NEW 2026-09-11, the grill. 941x1672 PNG, WebP at 675x1200 (towebp.py, no upscale). Placed in the daylight run so the group still crosses into night once."
+    },
+    {
+      "slot": "gallery-23",
+      "id": "K22",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K22_B_111209-1.jpg",
+      "caption": "Ugunskura vieta pie šķūnīša",
+      "note": "Back in the gallery after the fresh-eyes review took it out of the Teritorija section. A rubbish bin by the shed door and the black cooking tripod that got K31 retired are both fine at a 405px tile and were not fine at section size."
+    },
+    {
+      "slot": "gallery-24",
+      "id": "K35",
+      "role": "section",
+      "sizes": [
+        800
+      ],
+      "original": "originals\\K35_B_111211-4.jpg",
+      "caption": "Dīķis un bērzi vakara gaismā",
+      "note": "left the Teritorija section on 2026-09-09 when the pair took its place"
+    },
+    {
+      "slot": "gallery-25",
+      "id": "K26",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K26_B_111210-3.jpg",
+      "caption": "Ēkas gala fasāde vakara gaismā"
+    },
+    {
+      "slot": "gallery-26",
+      "id": "K23",
+      "role": "gallery",
+      "sizes": [
+        600,
+        1200
+      ],
+      "original": "originals\\K23_B_111209.jpg",
+      "caption": "Kārumnieki vasaras vakarā"
+    },
+    {
+      "slot": "lightbox (href only) K43",
+      "id": "K43",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals-batchD\\K43.jpg",
+      "note": "2026-09-15: the file the lightbox opens, from the same sixth-pass look as the tile, Lanczos only; the tile src stays 1200. Same for every lightbox entry below."
+    },
+    {
+      "slot": "lightbox (href only) zale_10",
+      "id": "zale_10",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\zale_10.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K39",
+      "id": "K39",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K39_C_160553-2.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K37",
+      "id": "K37",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K37_C_160553.jpg"
+    },
+    {
+      "slot": "lightbox (href only) zale_1",
+      "id": "zale_1",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\zale_1.jpg"
+    },
+    {
+      "slot": "lightbox (href only) zale_3",
+      "id": "zale_3",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\zale_3.jpg"
+    },
+    {
+      "slot": "lightbox (href only) pirts_4",
+      "id": "pirts_4",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\pirts_4.jpg"
+    },
+    {
+      "slot": "lightbox (href only) pirts_1",
+      "id": "pirts_1",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\pirts_1.jpg"
+    },
+    {
+      "slot": "lightbox (href only) pirts_5",
+      "id": "pirts_5",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "old-site\\pirts_5.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K18",
+      "id": "K18",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K18_A_110446-4.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K06",
+      "id": "K06",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K06_A_110444-4.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K10",
+      "id": "K10",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K10_A_110445-2.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K11",
+      "id": "K11",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K11_A_110445-3.jpg"
+    },
+    {
+      "slot": "lightbox (href only) dzakuzi",
+      "id": "dzakuzi",
+      "role": "lightbox",
+      "sizes": [
+        1536
+      ],
+      "original": "old-site\\Piedavajums_dzakuzi.jpg",
+      "note": "1536, the model's own output, 1.92x of the 800 source; it cannot reach 1600 honestly (B5)."
+    },
+    {
+      "slot": "lightbox (href only) K36",
+      "id": "K36",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K36_B_111211.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K30",
+      "id": "K30",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K30_B_111210-7.jpg"
+    },
+    {
+      "slot": "lightbox (href only) F01",
+      "id": "F01",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals-batchF\\F01_grils.png"
+    },
+    {
+      "slot": "lightbox (href only) K22",
+      "id": "K22",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K22_B_111209-1.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K35",
+      "id": "K35",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K35_B_111211-4.jpg"
+    },
+    {
+      "slot": "lightbox (href only) K23",
+      "id": "K23",
+      "role": "lightbox",
+      "sizes": [
+        1600
+      ],
+      "original": "originals\\K23_B_111209.jpg"
+    }
+  ],
+  "static": [
+    {
+      "src": "web/logo-mark-300.webp",
+      "dst": "logo-mark-300.webp"
+    },
+    {
+      "src": "web/logo-mark-600.webp",
+      "dst": "logo-mark-600.webp"
+    },
+    {
+      "src": "web/logo-mark-256.png",
+      "dst": "logo-mark-256.png"
+    },
+    {
+      "src": "web/logo-mark-512.png",
+      "dst": "logo-mark-512.png"
+    },
+    {
+      "src": "web/logo-600.webp",
+      "dst": "logo-600.webp"
+    },
+    {
+      "src": "web/logo-600.png",
+      "dst": "logo-600.png"
+    },
+    {
+      "src": "web/logo-wordmark-400.webp",
+      "dst": "logo-wordmark-400.webp"
+    },
+    {
+      "src": "web/logo-wordmark-600.webp",
+      "dst": "logo-wordmark-600.webp"
+    },
+    {
+      "src": "web/logo-wordmark-600.png",
+      "dst": "logo-wordmark-600.png"
+    }
+  ],
+  "generated": [
+    "favicon.ico",
+    "favicon-32.png",
+    "apple-touch-icon.png",
+    "icon-192.png",
+    "icon-512.png",
+    "og-karumnieki-1200.jpg"
+  ],
+  "_generated_doc": "Written into site/img by tools/make-icons.py (phase 4), not copied from photos/. Listed here so sync-assets.py does not prune them.",
+  "not_bound": "K23-companion (Par mums has one photo and no companion; K23 shows as a gallery tile). K64 and K59 were prepared and dropped: K64's 3:2 crop could not escape the cluttered TV stand, and K59 would have been a fourth frame from the same summer afternoon as K62, K61 and K67. _retired: K24, K31, K34. dikis (same field as E01). no_balk (same view as E01, autumn dawn). K25 (the dusk lawn with the tub behind the pine bush) left the gallery 2026-09-15; its files stay in photos/web, unbound, so sync-assets prunes K25-companion-800.webp from site/img. K03 (the big mattress room) left the Naksnosana pair and the Otrais stavs gallery 2026-09-28; its files stay in photos/web, unbound, so sync-assets prunes K03-companion-1600/3200 and K03-gallery-1200 from site/img."
+}

@@ -1,0 +1,47 @@
+# Runs the whole test gate (npm test) on a GitHub Ubuntu runner. By hand: Actions, gate, Run workflow.
+# Ubuntu minutes are free on a public repo. The fallback faces in site/css/fonts.css are drawn from Arial and Georgia,
+# which stock Ubuntu lacks, so they are installed first (Microsoft's core fonts, licence accepted non-interactively),
+# and the job stops if either is missing.
+name: gate
+on:
+  workflow_dispatch:
+    inputs:
+      online:
+        description: "Also open every outbound link (Google, Facebook, Waze, WhatsApp); needs those sites to cooperate"
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Arial and Georgia
+        run: |
+          echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+          sudo add-apt-repository -y multiverse
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ttf-mscorefonts-installer
+          sudo fc-cache -f
+          fc-match Arial
+          fc-match Georgia
+          fc-list | grep -qi 'arial' || { echo "Arial is not installed"; exit 1; }
+          fc-list | grep -qi 'georgia' || { echo "Georgia is not installed"; exit 1; }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: node tools/gate.mjs ${{ inputs.online && '--online' || '' }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-out
+          path: out/gate
+          retention-days: 7

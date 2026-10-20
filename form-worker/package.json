@@ -1,0 +1,6 @@
+{
+  "name": "karumnieki-form-worker",
+  "private": true,
+  "type": "module",
+  "description": "The enquiry form Worker (Cloudflare): e-mail through Brevo and WhatsApp through the Meta Cloud API"
+}

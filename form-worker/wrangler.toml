@@ -1,0 +1,32 @@
+# The enquiry form Worker (README.md beside this file). Deploy from this folder: npx wrangler login, then
+# npx wrangler deploy. Secrets go in with npx wrangler secret put NAME and never into this file:
+#   BREVO_API_KEY      Brevo, SMTP & API, an API key
+#   TO_EMAIL           where enquiries go (the owner's mailbox)
+#   WHATSAPP_TOKEN     Meta, a system user token with whatsapp_business_messaging
+#   WHATSAPP_PHONE_ID  Meta, the sender number's Phone number ID
+#   TURNSTILE_SECRET   Cloudflare Turnstile, the widget's secret key
+#   ALERT_EMAIL        optional: the maintainers' address for a short note (no guest data) when a channel fails
+#   INGEST_SECRET      the nightly reviews job's key for POST /atsauksmes/ingest
+# A channel whose settings are missing is skipped, so e-mail can go live before WhatsApp.
+name = "karumnieki-forma"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://karumnieki.lv,https://www.karumnieki.lv,https://karumnieki-preview.netlify.app,http://localhost:8477"
+FROM_EMAIL = "pieprasijumi@karumnieki.lv"
+WHATSAPP_TO = "37129338444"
+WHATSAPP_TEMPLATE = "jauns_pieprasijums_v3"
+WHATSAPP_LANG = "lv"
+# Only with a template that has the Rakstīt and Zvanīt buttons (README, step 4). v3 has them since 2026-10-12.
+WHATSAPP_BUTTONS = "1"
+
+# The Google reviews and guests' photos for the Atsauksmes block (GET /atsauksmes/lv, /en, /foto/<id>-s|l). Written each
+# night through POST /atsauksmes/ingest by a job outside this repo, 30 day expiry set here.
+# The namespace id is not kept in this public repo. Put the real one in its place locally before npx wrangler deploy
+# and never commit it. The placeholder is not a valid id, so a deploy made without the real one fails instead of
+# binding some other store.
+[[kv_namespaces]]
+binding = "ATSAUKSMES"
+id = "REPLACE-WITH-THE-ATSAUKSMES-NAMESPACE-ID"

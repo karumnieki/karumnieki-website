@@ -1,0 +1,628 @@
+/* Kārumnieki, the site's one stylesheet. Fonts are self-hosted (fonts.css).
+   Breakpoints: below 600 = phone, 600 to 899 = tablet (stacked), 900 and up = the 1440 layouts. */
+
+:root {
+  --ground: #f4eee3;
+  --band: #ebe3d3;
+  --ink: #27231e;
+  --ink-soft: #5a5444;
+  --sand: #cfb896;
+  --green: #4f6a3a;
+  --amber: #e9a44d;
+  --glow: #fcead1;
+  --glow-85: rgba(252, 234, 209, 0.85);
+  --whatsapp: #25d366;
+
+  --font-head: 'Playfair Display', 'Playfair Display Fallback', Georgia, 'Times New Roman', serif;
+  /* Two font families: Playfair Display for headings, Source Sans 3 for everything else, the bear's lines included
+     (Playfair and Lora are two serifs that look almost alike side by side). The Lora files stay in fonts/ and
+     fonts.css; nothing uses them, so no browser downloads them. */
+  --font-bear: 'Source Sans 3', 'Source Sans 3 Fallback', 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-sans: 'Source Sans 3', 'Source Sans 3 Fallback', 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* type scale, fluid between 390 and 1600. The ramp keeps growing past 1440, so a wide screen does not read the
+     page as far away. Phone values are the base. */
+  --fs-h1: clamp(34px, 24.98px + 2.314vw, 62px);
+  --fs-h2: clamp(28px, 22.84px + 1.3223vw, 44px);
+  /* H3: Playfair's lowercase macrons vanish below about 24px on a 1x screen, so desktop stays well above it */
+  --fs-h3: clamp(20px, 17.42px + 0.6612vw, 28px);
+  /* quotes one step above the body: 20 on a phone, 22 from 900px (20 on a computer read as one more line of a list) */
+  --fs-bear-line: 20px;
+  --fs-facts: clamp(14px, 13.63px + 0.0952vw, 15px);
+
+  /* step sizes: phone values here, each raised one step at 900 and up (the same 15% desktop scale) */
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-label: 14px;
+  --fs-caption: 13px;
+  --fs-eyebrow: 12px;
+  --fs-btn: 14px;
+
+  --pad: 20px;
+  --gutter: 12px;
+  --section-y: 64px;
+  --section-y-story: 72px;
+  --header-h: 56px;
+  --bar-h: 64px;
+  --measure-narrator: 512px;
+  --measure-form: 620px;
+}
+@media (min-width: 600px) { :root { --pad: 32px; --gutter: 24px; } }
+@media (min-width: 900px) {
+  :root {
+    --pad: 48px; --section-y: 128px; --section-y-story: 144px; --header-h: 80px;
+    --fs-bear-line: 22px;
+    --fs-body: 18px; --fs-small: 16px; --fs-label: 15px; --fs-caption: 14px; --fs-eyebrow: 13px; --fs-btn: 15px;
+    --measure-narrator: 560px; --measure-form: 660px;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: clip; scroll-padding-top: calc(var(--header-h) + 8px); -webkit-text-size-adjust: 100%; }
+/* Smooth in-page scrolling, switched on by js once the page has loaded. On from the start, it
+   turned a landing on #pieprasijums into a 12000px glide from the top and a language switch into a ride. Nobody who
+   asked for reduced motion gets it. */
+@media (prefers-reduced-motion: no-preference) { html.smooth-scroll { scroll-behavior: smooth; } }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 var(--fs-body)/1.6 var(--font-sans); overflow-x: clip; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+/* a class that sets `display` outranks the browser's own [hidden] rule, which had left the map share
+   fallback permanently on screen instead of appearing when Dalīties is pressed. Found 2026-09-09. */
+[hidden] { display: none !important; }
+a { color: inherit; }
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+h1, h2, h3 { font-family: var(--font-head); font-weight: 500; color: var(--ink); margin: 0; }
+h1 { font-size: var(--fs-h1); line-height: 1.12; letter-spacing: -0.01em; }
+h2 { font-size: var(--fs-h2); line-height: 1.18; }
+h3 { font-size: var(--fs-h3); line-height: 1.3; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.ink-room :focus-visible { outline-color: var(--glow); }
+.skip-link { position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--ink); color: var(--glow); padding: 8px 12px; }
+.skip-link:focus { left: 8px; }
+.container { max-width: 1360px; margin: 0 auto; padding: 0 var(--pad); }
+.ground { background: var(--ground); }
+.band { background: var(--band); }
+.ink-room { background: var(--ink); color: var(--glow); }
+.ink-room h2, .ink-room h3 { color: var(--glow); }
+.section { padding: var(--section-y) 0; }
+.section-story { padding: var(--section-y-story) 0; }
+.measure { max-width: 34rem; }
+
+/* eyebrow, facts line, bear voice, captions */
+.eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; font: 600 var(--fs-eyebrow)/1.2 var(--font-sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.eyebrow::before { content: ''; flex: none; width: 24px; height: 1px; background: var(--sand); }
+.ink-room .eyebrow { color: var(--sand); }
+.bear { font-family: var(--font-bear); font-weight: 400; color: var(--ink-soft); }
+.ink-room .bear { color: var(--glow-85); }
+.bear-line { font-size: var(--fs-bear-line); line-height: 1.4; margin: 0 0 16px; }
+.narrator { font-size: var(--fs-body); line-height: 1.6; max-width: var(--measure-narrator); }
+.narrator p { margin-bottom: 16px; }
+/* the two questions in Par mums: the loaded 600, never a synthetic 700 */
+.narrator strong { font-weight: 600; }
+/* the signature is the bear signing his own lines, in the same face as his quote: the text face, the small size
+   in semibold, like the thank-you dialog's sign-off. */
+.signature { font: 600 var(--fs-small)/1.4 var(--font-sans); color: var(--ink); margin-top: 20px; }
+.facts { display: flex; flex-wrap: wrap; gap: 0 10px; margin: 0 0 8px; font: 600 var(--fs-facts)/1.5 var(--font-sans); color: var(--green); }
+.facts .dot { color: var(--sand); }
+/* the hero rating line under the facts: verified numbers and a link to the listing, set as a plain line in the
+   facts' size and never as a rounded pill. The link's
+   ::after gives it a 44px thumb target without adding a pixel to the layout, as the review attributions do. */
+.rating-line { margin: 0 0 24px; font: 600 var(--fs-facts)/1.5 var(--font-sans); }
+.rating-line a { position: relative; display: inline-flex; align-items: center; gap: 6px; color: var(--ink); text-decoration-color: var(--sand); text-underline-offset: 3px; }
+.rating-line a::after { content: ''; position: absolute; left: -6px; right: -6px; top: 50%; height: 44px; transform: translateY(-50%); }
+.rating-line svg { width: 15px; height: 15px; flex: none; }
+.caption, figcaption { margin-top: 8px; font: 400 var(--fs-caption)/1.4 var(--font-sans); color: var(--ink-soft); }
+.ink-room figcaption { color: var(--glow-85); }
+figure { margin: 0; }
+.lead { font-size: var(--fs-body); }
+.fact-list { list-style: none; margin: 0; padding: 0; }
+.fact-list li { padding: 8px 0; border-bottom: 1px solid var(--sand); }
+.fact-list li:last-child { border-bottom: 0; }
+.ink-room .fact-list li { border-color: rgba(207, 184, 150, 0.35); }
+
+/* buttons: amber fill, ink fill, outlines; nothing else */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 24px; border-radius: 2px; border: 1px solid transparent; font: 600 var(--fs-btn)/1 var(--font-sans); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; cursor: pointer; background: none; color: var(--ink); white-space: nowrap; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-amber { background: var(--amber); border-color: var(--amber); color: var(--ink); }
+.btn-ink { background: var(--ink); border-color: var(--ink); color: var(--glow); }
+.btn-outline { border-color: var(--ink); color: var(--ink); }
+.ink-room .btn-outline { border-color: var(--glow); color: var(--glow); }
+.btn-block { width: 100%; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px 16px; }
+
+/* header */
+.site-header { position: sticky; top: 0; z-index: 50; background: var(--ground); border-bottom: 1px solid var(--sand); }
+.header-inner { display: flex; align-items: center; gap: 8px; height: var(--header-h); }
+/* the logo never gives up width: as a shrinkable flex item it was squashed to 47px wide at
+   1024 and to nothing at 900 once the row of menu links filled the header */
+.brand { display: flex; flex: none; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; min-width: 0; }
+.brand-mark { width: auto; height: 32px; }
+.brand-word { width: auto; height: 18px; }
+.brand-name { display: none; font: 500 18px/1 var(--font-head); color: var(--ink); white-space: nowrap; }
+.brand-playfair .brand-word { display: none; }
+.brand-playfair .brand-name { display: inline; }
+/* below 480 only the bears show; the hidden wordmark's slot still took the brand's 10px gap, which the EN link needs */
+@media (max-width: 479px) { .brand-word, .brand-name { display: none !important; } .brand { gap: 0; } }
+@media (max-width: 374px) { .header-inner { gap: 4px; } }
+.header-tel-text { display: none; }
+.header-tel-square { display: inline-flex; flex: none; width: 44px; height: 44px; align-items: center; justify-content: center; background: var(--amber); color: var(--ink); border-radius: 2px; }
+.header-tel-square svg { width: 22px; height: 22px; }
+.btn-header { min-height: 44px; padding: 0 14px; font-size: 13px; }
+.nav-toggle { flex: none; width: 44px; height: 44px; border: 0; background: transparent; padding: 0; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); }
+.burger, .burger::before, .burger::after { display: block; width: 22px; height: 2px; background: currentColor; position: relative; }
+.burger::before, .burger::after { content: ''; position: absolute; left: 0; }
+.burger::before { top: -7px; }
+.burger::after { top: 7px; }
+.site-nav { display: none; }
+.site-nav ul { list-style: none; margin: 0; padding: 0; }
+.site-nav a { text-decoration: none; color: var(--ink); }
+.nav-extra svg { width: 20px; height: 20px; }
+
+/* LV | EN. In the header: the menu labels' type, between the menu links and the phone number,
+   the page you are on in ink and the other in ink-soft. On a phone only the other language shows, left of the menu
+   button, 36px wide with its tap area reaching into the gaps to 44px; below 360 the header is full, so it is in the
+   menu only. In the menu: the same pair with the full names (Latviski | English) after WhatsApp and the phone. */
+.lang-switch { display: inline-flex; align-items: center; flex: none; }
+.lang-switch a { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 6px; font: 600 var(--fs-eyebrow)/1 var(--font-sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; }
+.lang-switch a[aria-current] { color: var(--ink); }
+.lang-switch a:not([aria-current]):hover { color: var(--ink); text-decoration: underline; text-decoration-color: var(--sand); text-underline-offset: 4px; }
+.lang-sep { color: var(--sand); }
+.lang-icon { display: none; }
+.header-inner > .lang-switch .lang-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 899px) {
+  .header-inner > .lang-switch a[aria-current], .header-inner > .lang-switch .lang-sep { display: none; }
+  .header-inner > .lang-switch a { min-width: 36px; padding: 0 4px; font-size: 13px; color: var(--ink); }
+  .header-inner > .lang-switch a::after { content: ''; position: absolute; top: 0; bottom: 0; left: -4px; right: -4px; }
+}
+@media (max-width: 359px) { .header-inner > .lang-switch { display: none; } }
+
+@media (max-width: 1279px) {
+  /* the open drawer sits on ink like the footer and the sticky bar: on cream it blended into the cream page
+     behind it. Opaque, no scrim, the page below stays as it is; the focus ring turns glow on ink the way the Pirts
+     room's does. Up to 1279: the row of menu links needs about 1250px beside the logo, LV | EN, the phone number
+     and Pieprasījums. */
+  .site-nav { position: absolute; left: 0; right: 0; top: 100%; background: var(--ink); color: var(--glow); border-bottom: 1px solid var(--sand); padding: 8px 0 12px; }
+  body.nav-open .site-nav { display: block; }
+  .site-nav li a, .nav-extra a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 var(--pad); font: 400 18px/1.2 var(--font-sans); color: var(--glow); }
+  .site-nav :focus-visible { outline-color: var(--glow); }
+  .nav-extra { border-top: 1px solid rgba(207, 184, 150, 0.35); margin-top: 8px; padding-top: 8px; }
+  .nav-extra .lang-switch { display: flex; padding: 0 var(--pad); }
+  .nav-extra .lang-switch a { display: inline-flex; min-height: 48px; padding: 0; font: 400 18px/1.2 var(--font-sans); letter-spacing: 0; text-transform: none; color: var(--glow-85); }
+  .nav-extra .lang-switch a[aria-current] { color: var(--glow); font-weight: 600; }
+  .nav-extra .lang-switch a:not([aria-current]):hover { color: var(--glow); }
+  .nav-extra .lang-switch .lang-code { display: none; }
+  .nav-extra .lang-sep { padding: 0 12px; }
+  .nav-extra .lang-icon { display: block; flex: none; margin-right: 12px; color: var(--glow); }
+}
+@media (min-width: 900px) {
+  .header-inner { gap: 24px; }
+  .brand-mark { height: 44px; }
+  .brand-word { height: 24px; }
+  .brand-name { font-size: 26px; } /* 22px in the brief; raised so the macron in Kārumnieki survives at 1x */
+  .header-tel-square { display: none; }
+  .header-tel-text { display: inline-block; font: 600 var(--fs-small)/1 var(--font-sans); color: var(--ink); text-decoration: none; margin-right: 8px; white-space: nowrap; }
+}
+/* the row of menu links from 1280. From 900 it wrapped PAR MUMS and KĀ NOKĻŪT onto two lines
+   and squashed the logo up to about 1200; below 1280 the menu button serves, as it does on a tablet. */
+@media (min-width: 1280px) {
+  .site-nav { display: block; margin: 0 auto; }
+  .site-nav ul { display: flex; gap: 28px; }
+  .site-nav li a { font: 600 var(--fs-eyebrow)/1 var(--font-sans); letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 0; }
+  .nav-extra { display: none; }
+  .nav-toggle { display: none; }
+}
+
+/* 12-column grid at 900 and up; a stacked flex column below (photo first, except Par mums) */
+.grid { display: flex; flex-direction: column; gap: 24px; }
+@media (min-width: 900px) {
+  .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 32px; align-items: start; }
+}
+
+/* 1 hero */
+.hero-grid { padding-top: 24px; padding-bottom: 64px; }
+.hero h1 { margin-bottom: 16px; }
+.hero-media { order: -1; } /* photo first at 390 */
+.hero-media img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: 30% 50%; }
+.hero .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hero .cta-row .btn { width: 100%; padding: 0 12px; }
+@media (min-width: 600px) and (max-width: 899px) {
+  .hero-media img { aspect-ratio: 3 / 2; object-position: 40% 50%; }
+}
+@media (min-width: 900px) {
+  .hero-grid { padding-top: 88px; padding-bottom: 112px; align-items: center; }
+  .hero-text { grid-column: 1 / 6; grid-row: 1; }
+  .hero-media { grid-column: 6 / 13; grid-row: 1; order: 0; }
+  .hero-media img { aspect-ratio: 3 / 2; object-position: 50% 50%; }
+  .hero h1 { margin-bottom: 20px; }
+  .hero .rating-line { margin-bottom: 32px; }
+  .hero .cta-row { display: flex; gap: 16px; }
+  .hero .cta-row .btn { width: auto; padding: 0 24px; }
+}
+
+/* generic split section: head (eyebrow + H2), media, text; the grid areas differ per section */
+.split-head h2 { margin-bottom: 0; }
+.split-text > p:first-child, .split-text > .bear-line:first-child { margin-top: 0; }
+/* the Nakšņošana kicker closes the two plain paragraphs */
+.s-naksnosana .split-text .bear-line { margin-top: 24px; }
+@media (min-width: 900px) {
+  .split-head { grid-row: 1; }
+  .split-text { grid-row: 2; }
+  .split-media { grid-row: 1 / 3; }
+  .s-parmums .split-head, .s-parmums .split-text { grid-column: 8 / 13; }
+  .s-parmums .split-media { grid-column: 1 / 7; }
+  /* the Par mums text is about 870px tall at 1440, twice the 413px photo, which left ~460px
+     of empty cream under it. The photo stays in view beside the text while it is read, and comes to rest
+     at the text's end. */
+  .s-parmums .split-media { align-self: start; position: sticky; top: calc(var(--header-h) + 32px); }
+  .s-svinibas .split-head, .s-svinibas .split-text { grid-column: 1 / 6; }
+  .s-svinibas .split-media { grid-column: 6 / 13; }
+  .s-svinibas .facts-row { grid-column: 1 / 13; grid-row: 3; }
+  /* Row 1 is one photo beside the text, so the two columns end at roughly the same height; row 2 is the
+     pair across all 12 columns. Before 2026-09-08 the media column stacked two tall photos beside a short
+     text column and left ~480px of empty cream, and K12 was a 160px square floated inside a paragraph. */
+  .s-naksnosana .split-head, .s-naksnosana .split-text { grid-column: 8 / 13; }
+  .s-naksnosana .split-media { grid-column: 1 / 8; }
+  /* two 3:2 halves, K06 and the džakuzi */
+  .s-naksnosana .naks-pair { grid-column: 1 / 13; grid-row: 3; grid-template-columns: 1fr 1fr; }
+  .s-pirts .split-head, .s-pirts .split-text { grid-column: 1 / 6; }
+  .s-pirts .split-media { grid-column: 6 / 13; }
+}
+
+/* photos: contained, 0 radius, no border, no shadow */
+.photo img { width: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
+.ratio-3-2 img { aspect-ratio: 3 / 2; }
+.ratio-3-4 img { aspect-ratio: 3 / 4; }
+.ratio-2-1 img { aspect-ratio: 2 / 1; }
+.ratio-1-1 img { aspect-ratio: 1 / 1; }
+/* the Teritorija photograph is a panorama and it is the only picture in that section, so it keeps
+   its own frame rather than being cropped to 2:1: the goal sits at the left and the pond at the
+   right, and a 2:1 crop loses one end or the other. */
+.ratio-pano img { aspect-ratio: 1891 / 831; }
+/* on a phone the full panorama is only about 154px tall, a thin band. Below 600px it is boxed at
+   16:9 and cover-cropped, which loses 11% from each side: the goal sits at 23 to 35% across and
+   the pond at 33 to 82%, so both survive the crop and the photograph gains 40px of height. */
+@media (max-width: 599px) { .ratio-pano img { aspect-ratio: 16 / 9; } }
+/* a binding minimum crop is a zoom window: the image box is --z times the frame, the frame shows the part
+   at --x / --y (0 = left or top edge, 1 = right or bottom edge). Never a pixel edit. */
+.zoom { position: relative; overflow: hidden; aspect-ratio: var(--ar, 3 / 2); }
+.zoom img { position: absolute; max-width: none; width: calc(100% * var(--z, 1)); height: calc(100% * var(--z, 1)); left: calc(var(--x, 0.5) * (100% - 100% * var(--z, 1))); top: calc(var(--y, 0.5) * (100% - 100% * var(--z, 1))); object-fit: cover; object-position: var(--pos, 50% 50%); aspect-ratio: auto; }
+.pair { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.stack { display: grid; gap: 12px; }
+@media (min-width: 900px) {
+  .pair { grid-template-columns: 2fr 1fr; gap: 1px; background: var(--ground); align-items: start; }
+  .pair figure { background: inherit; }
+  .stack { gap: 24px; }
+}
+/* the 1px butt-gap is a `ground` hairline: invisible on cream, but on the ink room it drew a
+   bright line between the two photos. On ink the gap is ink, so the photos butt. */
+.ink-room .pair { background: var(--ink); }
+.ink-room .pair figure { background: var(--ink); }
+
+/* fact columns (3 Svinības) */
+.facts-row { display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 600px) { .facts-row { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.fact::before { content: ''; display: block; width: 40px; height: 1px; background: var(--sand); margin-bottom: 12px; }
+.fact p { margin: 6px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-soft); }
+
+/* 6 Teritorija. The wide E01 lead (pond, meadow and sports field in one frame), then the bear's line and the
+   fact list on the left with two separate 3:4 figures on the right, the grill and the fire pit.
+   The figures sit a gutter apart and each carries its caption: one is daylight and one is night,
+   and butted on a hairline seam they read as a mistake. On a phone they sit side by
+   side under the list, each about the size of a gallery tile; stacked full width they added 1136px. The text
+   is one wrapper so the photos' height never opens a gap between the quote and the list. */
+.terr-wide { grid-column: 1 / 13; }
+.terr-facts { margin-top: 24px; }
+.terr-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (min-width: 600px) { .terr-photos { gap: var(--gutter); } }
+@media (min-width: 900px) {
+  .terr-text { grid-column: 1 / 7; }
+  .terr-facts { margin-top: 32px; }
+  .terr-photos { grid-column: 7 / 13; }
+}
+
+/* 7 gallery. Three labelled groups (Pirmais stāvs / Otrais stāvs / Ārā): the order was already grouped
+   but nothing said so, so it read as jumbled. Tile captions live in the lightbox. */
+.gallery-group { margin-top: 44px; }
+.gallery-group:first-of-type { margin-top: 32px; }
+.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; list-style: none; margin: 14px 0 0; padding: 0; }
+@media (min-width: 600px) { .gallery { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+/* four across on a computer: with Otrais stāvs at 7, three across ran 3+3+1,
+   four runs 4+3, and the other two groups come out even (12 = 3 rows, 8 = 2 rows; at three across Teritorija
+   was 3+3+2). Tiles go from 405 to about 298px wide at 1440 and the gallery loses three rows. Below 1100px a
+   fourth column would make tiles under 235px, so tablets keep three. */
+@media (min-width: 1100px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
+/* on a phone an odd last tile (the džakuzi, Otrais stāvs) takes the full row rather than sitting beside a gap */
+@media (max-width: 599px) { .gallery li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+.tile { display: block; text-decoration: none; color: inherit; }
+.tile .frame { aspect-ratio: 4 / 3; overflow: hidden; }
+.tile img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 50%); }
+/* a tile carrying an approved crop (2026-09-11: zale_3, K23 and pirts_4 at the bottom, K10 at the top) is a
+   zoom window like the section slots: --z enlarges the image box, --y 0 pins its top edge (a bottom crop),
+   --y 1 pins its bottom edge (a top crop), --x picks the horizontal window. The lightbox honours the same
+   floor from data-crop-top / data-crop-bottom on the tile, the way zale_10's binding floor has always been. */
+.tile .zoom img { width: calc(100% * var(--z, 1)); height: calc(100% * var(--z, 1)); }
+body.lb-ready .tile { cursor: zoom-in; }
+
+/* 7b lightbox. No library, no animation, no thumbnail strip. */
+.lb { border: 0; padding: 0; margin: 0; inset: 0; width: 100%; max-width: 100%; height: 100%; max-height: 100%; background: var(--ink); color: var(--glow); }
+.lb::backdrop { background: var(--ink); }
+.lb :focus-visible { outline: 2px solid var(--glow); outline-offset: 2px; }
+.lb-inner { position: relative; display: flex; flex-direction: column; height: 100%; padding: 56px 12px 12px; }
+@media (min-width: 900px) { .lb-inner { padding: 64px 76px 20px; } }
+.lb-stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; }
+/* The frame and the image are sized in PIXELS by js (see fitStage in site.js), not by aspect-ratio here. Two
+   CSS attempts failed the same way: with width and height both auto, an aspect-ratio box clamped by BOTH
+   max-width and max-height only honours whichever one binds first, so at 390 zale_10 letterboxed and showed
+   the bottom 22% its crop floor hides, and at 1440 every image over-cropped by 34%. The frame is the visible
+   window and clips; the image inside it is larger by the crop share, pinned left and slid up by the top crop,
+   so a top, bottom and right floor can all hold at once (K09, 2026-09-15). */
+.lb-frame { position: relative; flex: none; overflow: hidden; max-width: 100%; max-height: 100%; }
+.lb-frame img { position: absolute; left: 0; top: 0; display: block; max-width: none; max-height: none; object-fit: cover; }
+.lb-foot { flex: none; display: flex; align-items: baseline; gap: 16px; padding-top: 12px; }
+.lb-caption, .lb-count { font: 400 var(--fs-caption)/1.4 var(--font-sans); color: var(--glow-85); margin: 0; }
+.lb-count { margin-left: auto; white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* z-index: since the image is positioned inside its clipping frame (2026-09-15) it paints above earlier positioned
+   siblings, and on a phone a landscape photo covered the arrows; the buttons stay on top */
+.lb-btn { position: absolute; z-index: 2; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 0; background: none; color: var(--glow); cursor: pointer; padding: 0; }
+.lb-btn svg { width: 26px; height: 26px; }
+.lb-close { top: 8px; right: 8px; }
+.lb-prev { left: 4px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 4px; top: 50%; transform: translateY(-50%); }
+@media (min-width: 900px) { .lb-close { top: 12px; right: 16px; } .lb-prev { left: 16px; } .lb-next { right: 16px; } }
+.lb-single .lb-prev, .lb-single .lb-next { display: none; } /* one guest photo: nothing to step to */
+body.lb-open { overflow: hidden; }
+
+/* 8 reviews */
+.ratings { display: grid; gap: 24px; margin-top: 24px; }
+.rating { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.stars { display: inline-flex; gap: 2px; color: var(--ink); }
+.stars svg { width: 18px; height: 18px; }
+/* the Facebook row has no stars (Facebook shows a recommend share, 2026-09-15); its empty box holds the five stars'
+   width so both rating lines start at the same x. On a phone the rows stack and the box would only indent. */
+.stars { min-width: 98px; }
+@media (max-width: 599px) { .stars-none { display: none; } }
+/* From the tablet up the two rating rows share one grid, so both Skatīt buttons take the width of the wider label
+   and line up, and the Google and Facebook boxes are the same size. */
+@media (min-width: 600px) {
+  .ratings { grid-template-columns: max-content 1fr max-content; column-gap: 20px; align-items: center; }
+  .rating { display: contents; }
+  .ratings .rating .btn { margin-left: 0; } /* outranks the `margin-left: auto` below, which would pin each button to its own width */
+}
+.rating-text { font: 600 var(--fs-small)/1.4 var(--font-sans); }
+.rating .btn { margin-left: auto; }
+@media (max-width: 599px) { .rating .btn { margin-left: 0; width: 100%; } }
+/* quoted reviews: one lead then three columns. Always the sans, never Lora. */
+.review { margin: 0; }
+.review p { margin: 0 0 10px; color: var(--ink); }
+.review-lead { margin-top: 44px; max-width: 42rem; }
+.review-lead p { font-size: var(--fs-body); line-height: 1.6; } /* one size for all three reviews since 2026-09-16 */
+.review-by { font: 400 var(--fs-caption)/1.4 var(--font-sans); color: var(--ink-soft); }
+/* the attribution link is 18px of text inside a caption line; the pseudo-element gives it a 44px thumb
+   target without adding a single pixel to the layout */
+.review-by a { position: relative; color: inherit; text-decoration-color: var(--sand); text-underline-offset: 3px; }
+.review-by a::after { content: ''; position: absolute; left: -6px; right: -6px; top: 50%; height: 44px; transform: translateY(-50%); }
+.review-row { display: grid; gap: 28px; margin-top: 40px; }
+/* auto-fit so the row stays even whether there are two quotes or three */
+@media (min-width: 900px) { .review-row { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 48px; } }
+.review-row .review { border-top: 1px solid var(--sand); padding-top: 16px; }
+.review-row .review p { font-size: var(--fs-body); line-height: 1.6; }
+/* the live reviews (site.js): one review per slide,
+   text on the left, up to four photos on the right; arrows and "3 / 38" under it; a swipe pages natively */
+.rv { margin-top: 44px; }
+.rv-viewport { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; transition: height 0.3s ease; border-top: 1px solid var(--sand); }
+.rv-viewport::-webkit-scrollbar { display: none; }
+.rv-viewport:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.rv-track { display: flex; align-items: flex-start; }
+.rv-slide { flex: 0 0 100%; min-width: 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; gap: 48px; align-items: flex-start; padding: 28px 0 8px; box-sizing: border-box; }
+.rv-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.rv-stars { display: inline-flex; gap: 3px; color: var(--ink); }
+.rv-star svg { display: block; width: 16px; height: 16px; }
+.rv-star-off { opacity: 0.25; }
+.rv-text { margin: 0; max-width: 62ch; font: 400 var(--fs-body)/1.7 var(--font-sans); color: var(--ink); white-space: pre-line; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; overflow: hidden; }
+.rv-slide.is-open .rv-text { display: block; -webkit-line-clamp: none; overflow: visible; }
+.rv-toggle { align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; margin: -12px 0 -8px; padding: 0; border: 0; background: none; font: 600 var(--fs-small)/1.4 var(--font-sans); color: var(--ink); text-decoration: underline; text-decoration-color: var(--sand); text-underline-offset: 3px; cursor: pointer; }
+.rv-who { display: flex; align-items: center; gap: 12px; }
+.rv-avatar { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--sand); color: var(--ink); font: 600 var(--fs-caption)/1 var(--font-sans); letter-spacing: 0.04em; }
+.rv-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.rv-name { font: 600 var(--fs-small)/1.3 var(--font-sans); color: var(--ink); }
+.rv-date { font: 400 var(--fs-caption)/1.4 var(--font-sans); color: var(--ink-soft); }
+.rv-date a { position: relative; color: inherit; text-decoration-color: var(--sand); text-underline-offset: 3px; }
+.rv-date a::after { content: ''; position: absolute; left: -6px; right: -6px; top: 50%; height: 44px; transform: translateY(-50%); }
+.rv-shots { flex: 0 0 288px; display: grid; grid-template-columns: repeat(2, 140px); gap: 8px; }
+.rv-shot { position: relative; display: block; width: 140px; height: 140px; padding: 0; border: 0; border-radius: 2px; overflow: hidden; background: var(--sand); cursor: zoom-in; }
+.rv-shot[hidden] { display: none; }
+.rv-shot img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+.rv-shot:hover img { transform: scale(1.04); }
+.rv-shot-more { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(39, 35, 30, 0.55); color: var(--glow); font: 600 var(--fs-body)/1 var(--font-sans); }
+.rv-bar { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.rv-count { margin: 0 auto 0 0; font: 400 var(--fs-caption)/1.4 var(--font-sans); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.rv-nav { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--ink); border-radius: 50%; background: none; color: var(--ink); cursor: pointer; }
+.rv-nav svg { width: 20px; height: 20px; }
+.rv-next svg { transform: scaleX(-1); }
+.rv-nav:disabled { opacity: 0.3; cursor: default; }
+@media (max-width: 899px) {
+  .rv-slide { flex-direction: column; gap: 20px; }
+  .rv-shots { flex: none; width: 100%; grid-template-columns: repeat(4, 1fr); }
+  .rv-shot { width: auto; height: auto; aspect-ratio: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .rv-viewport { transition: none; } .rv-shot img { transition: none; } }
+.mobile-cta { margin-top: 40px; }
+@media (min-width: 900px) { .mobile-cta { display: none; } }
+
+/* 9 map */
+.map-frame { border: 1px solid var(--sand); aspect-ratio: 7 / 6; background: var(--band); }
+.map-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+/* Before the button: a still OpenStreetMap picture from our own server (img/karte-*.webp, zoom 13, centred on the
+   house, so the pin sits in the middle at any crop) and a bar under it with the Google note and the button. The frame
+   takes its height from the picture plus the bar; once Google's map is in, .map-static goes and the ratio is back. */
+.map-frame.map-static { aspect-ratio: auto; }
+.map-view { position: relative; aspect-ratio: 7 / 6; overflow: hidden; }
+.map-view picture, .map-view img { display: block; width: 100%; height: 100%; }
+.map-view img { object-fit: cover; }
+.map-pin { position: absolute; left: 50%; top: 50%; width: 34px; height: 46px; transform: translate(-50%, -100%); filter: drop-shadow(0 2px 3px rgba(39, 35, 30, 0.35)); }
+.map-pin path { fill: var(--amber); stroke: var(--ink); stroke-width: 2; }
+.map-pin circle { fill: var(--ground); }
+.map-tag { position: absolute; left: 50%; top: calc(50% + 6px); transform: translateX(-50%); padding: 6px 9px; background: var(--ink); color: var(--glow); font: 600 12px/1 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+.map-osm { position: absolute; right: 0; bottom: 0; padding: 2px 6px; background: rgba(255, 255, 255, 0.8); color: #333; font-size: 11px; line-height: 1.4; text-decoration: none; }
+.map-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 12px 14px; border-top: 1px solid var(--sand); background: var(--ground); }
+.map-bar p { flex: 1 1 260px; margin: 0; font-size: var(--fs-caption); color: var(--ink-soft); }
+.map-bar .btn { flex: none; }
+.form-privacy { margin: 12px 0 0; font-size: var(--fs-caption); color: var(--ink-soft); }
+.form-error { margin: 12px 0 0; padding: 10px 14px; border-left: 3px solid var(--amber); background: var(--ground); font-size: var(--fs-small); }
+.form-error a { white-space: nowrap; text-decoration-color: var(--sand); text-underline-offset: 3px; }
+/* Cloudflare Turnstile in "interaction-only" mode: empty and taking no room unless it needs the visitor to click */
+.turnstile:not(:empty) { margin-bottom: 12px; }
+.btn-submit[disabled] { opacity: 0.7; cursor: progress; }
+/* the honeypot: off screen for people, still in the form for bots */
+.hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.form-privacy a { color: var(--ink); text-decoration-color: var(--sand); text-underline-offset: 3px; }
+@media (min-width: 600px) { .map-frame, .map-view { aspect-ratio: 16 / 10; } .map-frame.map-static { aspect-ratio: auto; } }
+@media (min-width: 900px) {
+  .map-text { grid-column: 1 / 6; }
+  .map-col { grid-column: 6 / 13; }
+}
+/* The map buttons sit on a grid, not on flex, so every one is the same width and the share fallback's
+   two line up under the three above them. Content-width buttons made a ragged row. */
+.map-col .btn-row { margin-top: 16px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 600px) { .map-col .btn-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+.map-col .btn-row .btn { width: 100%; padding: 0 10px; }
+/* from 900 the map column is 7 of 12, and at its narrowest SKATĪT GOOGLE MAPS ran out past its own border at 900 and
+   sat on it until about 990 (OPEN GOOGLE MAPS to about 935). Until 1024 a label that does not fit
+   wraps onto two lines inside the same 48px button; from 1024 it fits on one. */
+@media (min-width: 900px) and (max-width: 1023px) { .map-col .btn-row .btn { white-space: normal; text-align: center; line-height: 1.2; } }
+.share-fallback { margin-top: 16px; }
+.address { font-style: normal; }
+.address p { margin-bottom: 8px; }
+
+/* 10 form */
+.form { max-width: var(--measure-form); margin-top: 24px; }
+/* two groups since 2026-09-16: the event questions, then the contact details with Nosūtīt right under them. One
+   column on a phone and a tablet; side by side from 900px, so the whole form fits a laptop screen (tools/form-fit.mjs) */
+.form-group-title { padding: 0; margin-bottom: 16px; }
+.field-row-wide { display: grid; gap: 0; }
+@media (min-width: 900px) {
+  .form { max-width: none; }
+  .form-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; align-items: start; }
+  .form-cols > .form-group { margin: 0; }
+  .field-row-wide { grid-template-columns: 1fr 1fr; gap: 16px; }
+  #pieprasijums { scroll-margin-top: calc(24px - var(--section-y)); }
+}
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.field label, .field-legend { font: 600 var(--fs-label)/1.3 var(--font-sans); color: var(--ink); }
+.field-legend { padding: 0; }
+.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 0 12px; border: 1px solid var(--sand); border-radius: 0; background: var(--ground); color: var(--ink); font: 400 calc(var(--fs-small) + 1px)/1.4 var(--font-sans); }
+.field textarea { min-height: 120px; padding: 12px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--ink); outline-offset: 0; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 339px) { .field-row { grid-template-columns: 1fr; } }
+fieldset { border: 0; margin: 0 0 16px; padding: 0; min-width: 0; }
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; margin-top: 6px; }
+.check { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: calc(var(--fs-small) + 1px); cursor: pointer; }
+.check input { width: 24px; height: 24px; margin: 0; flex: none; accent-color: var(--ink); }
+/* "call me instead" sits on its own line, not in the Papildus group, which is about services */
+.check-single { margin: 4px 0 24px; padding-top: 12px; border-top: 1px solid var(--sand); }
+.submit-row { display: grid; gap: 12px; }
+@media (min-width: 600px) { .submit-row { grid-template-columns: 1fr 1fr; gap: 16px; } }
+.btn-submit, .submit-row .btn { min-height: 56px; width: 100%; }
+.form-after { margin-top: 12px; font-size: var(--fs-small); }
+.form-note { margin-top: 16px; padding: 12px 16px; border: 1px solid var(--sand); background: var(--ground); font-size: calc(var(--fs-small) + 1px); }
+
+/* 10b the thank-you dialog. An opaque ink backdrop like the lightbox (no translucent scrim), a cream panel with a
+   sand hairline, the X reused from the lightbox, one outline button. */
+.thanks { border: 1px solid var(--sand); padding: 0; margin: auto; width: calc(100% - 40px); max-width: 520px; background: var(--ground); color: var(--ink); }
+.thanks::backdrop { background: var(--ink); }
+.thanks-inner { position: relative; padding: 56px 24px 24px; }
+.thanks .lb-btn { color: var(--ink); }
+.thanks h3 { margin-bottom: 12px; }
+.thanks p { font-size: calc(var(--fs-small) + 1px); }
+.thanks-sign { font-weight: 600; }
+.thanks .form-note { margin: 20px 0 24px; font-size: var(--fs-small); }
+.thanks .btn { width: 100%; }
+@media (min-width: 600px) {
+  .thanks-inner { padding: 64px 40px 40px; }
+  .thanks .btn { width: auto; }
+}
+
+/* 11 contacts strip + footer */
+@media (min-width: 900px) {
+  .contact-photo { grid-column: 1 / 6; }
+  .contact-text { grid-column: 7 / 13; }
+}
+.contact-list { list-style: none; margin: 0 0 24px; padding: 0; font-size: var(--fs-body); }
+.contact-list li { padding: 6px 0; }
+/* the link box, not the row, is what a thumb hits, so give it the 44px every control gets */
+.contact-list li:has(a) { padding: 0; }
+.contact-list a { display: inline-block; padding: 8px 0; text-decoration-color: var(--sand); text-underline-offset: 3px; }
+.footer { background: var(--ink); color: var(--glow); padding: 64px 0 calc(64px + env(safe-area-inset-bottom)); }
+.footer a { color: var(--glow); text-decoration-color: rgba(252, 234, 209, 0.5); text-underline-offset: 3px; }
+/* the footer is the bear's closing line only; the contacts live in Kontakti
+   right above it. The quote takes the same size as the other bear lines on the page. */
+.footer { text-align: center; }
+.footer-closing { max-width: 640px; margin: 0 auto; }
+.footer .bear { color: var(--glow-85); margin: 0; }
+.footer .signature { color: var(--glow); margin-top: 12px; }
+.footer-meta { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(207, 184, 150, 0.35); font-size: var(--fs-label); color: var(--glow-85); }
+.footer :focus-visible { outline-color: var(--glow); }
+/* the policy links and Sīkdatņu iestatījumi under the footer line: links on ink, each a 44px tap target */
+.footer-links { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; font-size: var(--fs-label); }
+.footer-links a, .link-btn { display: inline-flex; align-items: center; min-height: 44px; }
+.link-btn { border: 0; background: none; padding: 0; font: inherit; color: var(--glow); cursor: pointer; text-decoration: underline; text-decoration-color: rgba(252, 234, 209, 0.5); text-underline-offset: 3px; }
+
+/* Cookie banner (js/site.js shows it while there is no stored choice). The first layer is short: the purpose, that
+   Google gets the data, and the link to the cookie policy, which has the 2 years, the USA and the way back (shorter
+   than a banner hanging from the header over the photo, so the photo stays clear).
+   Below 900px it sits at the foot of the screen, low enough that on a 390x844 phone the hero's Zvanīt and
+   Pieprasījums stay free, and above the sticky call bar once that shows (tools/consent-test.mjs checks both).
+   From 900px it is an ordinary bar across the foot of the screen: the text, then the two buttons on the same line. */
+.consent { position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: var(--ground); border-top: 1px solid var(--sand); box-shadow: 0 -6px 18px rgba(39, 35, 30, 0.14); padding: 9px var(--pad) calc(10px + env(safe-area-inset-bottom)); }
+.consent-text { margin: 0 0 7px; font-size: 13.5px; line-height: 1.35; }
+.consent-text a { text-decoration-color: var(--sand); text-underline-offset: 3px; }
+.consent-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.consent .btn { min-height: 40px; padding: 0 12px; }
+@media (max-width: 767px) {
+  body.bar-on .consent { bottom: calc(var(--bar-h) + 1px + env(safe-area-inset-bottom)); padding-bottom: 10px; }
+}
+@media (min-width: 900px) {
+  .consent { display: flex; align-items: center; justify-content: center; gap: 32px; padding: 14px var(--pad); box-shadow: 0 -6px 18px rgba(39, 35, 30, 0.12); }
+  .consent-text { margin: 0; max-width: 70ch; font-size: var(--fs-small); line-height: 1.45; }
+  .consent-btns { flex: none; }
+  .consent .btn { min-height: 44px; padding: 0 28px; }
+}
+
+/* sticky bar, phones only; shown by js once the hero buttons have scrolled away */
+.sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: none; grid-template-columns: repeat(3, 1fr); background: var(--ink); border-top: 1px solid var(--sand); padding-bottom: env(safe-area-inset-bottom); }
+.sticky-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; height: var(--bar-h); color: var(--glow); text-decoration: none; font: 600 12px/1 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; }
+.sticky-bar svg { width: 22px; height: 22px; }
+.sticky-bar .ic-tel { color: var(--amber); }
+.sticky-bar .ic-wa { color: var(--whatsapp); }
+/* the bar is ink, so the page's ink ring was invisible on it: glow, drawn inside the cell */
+.sticky-bar a:focus-visible { outline-color: var(--glow); outline-offset: -4px; }
+@media (max-width: 767px) {
+  body.bar-on .sticky-bar { display: grid; }
+  body.bar-on { padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom)); }
+}
+
+/* Policy pages (privatuma-politika, sikdatnu-politika and their English twins): the site's header and footer around
+   one column of text at reading width. Below 600px a three-column table has no room (the first check broke "How long"
+   into letters), so each row becomes a block: the name in bold, what it does, how long. */
+.policy { padding: 40px 0 var(--section-y); }
+.policy-body { max-width: 720px; }
+.policy h1 { font-size: var(--fs-h2); margin-bottom: 12px; }
+.policy h2 { font-size: var(--fs-h3); margin: 40px 0 12px; }
+.policy .updated { color: var(--ink-soft); font-size: var(--fs-small); }
+.policy ul { margin: 0 0 16px; padding-left: 22px; }
+.policy li { margin-bottom: 6px; }
+.policy a { text-decoration-color: var(--sand); text-underline-offset: 3px; overflow-wrap: anywhere; }
+.policy a[href^="tel:"] { white-space: nowrap; }
+.policy table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: var(--fs-small); }
+.policy th, .policy td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--sand); text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.policy th { font-weight: 600; }
+.policy .btn { margin-top: 8px; }
+@media (max-width: 599px) {
+  .policy thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .policy table, .policy tbody, .policy tr, .policy td { display: block; }
+  .policy tr { padding: 12px 0; border-bottom: 1px solid var(--sand); }
+  .policy td { padding: 2px 0; border: 0; }
+  .policy td:first-child { font-weight: 600; }
+  .policy td:last-child { color: var(--ink-soft); }
+}

@@ -1,0 +1,9 @@
+/node_modules/
+/out/
+/previews/
+/photos/
+__pycache__/
+*.pyc
+/tools/sync-state.json
+.DS_Store
+Thumbs.db
