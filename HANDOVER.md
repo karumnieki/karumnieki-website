@@ -62,7 +62,9 @@ FAIL by hand before editing anything. `npm run test:perf` adds a Lighthouse repo
 
 `.github/workflows/gate.yml` runs `npm test` on a GitHub Ubuntu runner, by hand (Actions, gate, Run workflow). It
 installs Arial and Georgia first (`ttf-mscorefonts-installer`), because the size-matched fallback fonts in
-`site/css/fonts.css` are drawn from them and stock Ubuntu has neither.
+`site/css/fonts.css` are drawn from them and stock Ubuntu has neither. The runner is pinned to `ubuntu-24.04`:
+`ubuntu-latest` became 26.04 in October 2026, where Playwright 1.59.1 cannot install Chromium. Moving on means a
+newer Playwright and the page heights measured again on Windows and Linux.
 
 ## 3. How the site works
 
