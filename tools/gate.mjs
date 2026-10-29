@@ -3,6 +3,7 @@
 // --root runs every browser check on a build (tools/build.py --test) instead of site/; lint still reads site/.
 // 1. lint.py: long dashes, html lang, every <img> has alt, width, height and an existing file, Lora only in .bear,
 //    and parity.py (the English page must match the Latvian one tag for tag, image for image, link for link).
+//    check-edit tests: tools/test_check_edit.py, every rule of tools/check_edit.py refusing its bad change.
 // 2. Starts tools/serve.py on its own port (8478, so a preview you keep open on 8477 is left alone).
 // 3. The browser checks, each on the Latvian page /site/ and the English page /site/en/:
 //    shoot       screenshots at 390, 768, 1024 and 1440; fails on sideways scroll, console errors, 4xx/5xx
@@ -91,6 +92,7 @@ function judgeShoot(dir, tag) {
 // 1. lint, no server needed; the form Worker's own tests (node:test, a fake fetch: nothing is sent anywhere). The file,
 // not the folder: Node 24 on Windows does not take a folder after --test
 run('lint + parity', PY, ['tools/lint.py']);
+run('check-edit tests', PY, ['tools/test_check_edit.py']);
 run('form-worker', 'node', ['--test', 'form-worker/test/worker.test.mjs']);
 
 // 2. the server

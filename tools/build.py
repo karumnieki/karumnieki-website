@@ -10,6 +10,8 @@ What changes against site/ (HANDOVER section 6):
   the CSS and HTML have no comment markers inside strings (checked below);
 - the robots noindex meta out of all six pages;
 - the thank-you dialog's preview line (<p class="form-note">, "the form does not send yet") out of both home pages;
+- the data-edit markers (which texts the owner may change, tools/editable.json) out of both home pages, so the live
+  HTML is the same with or without them;
 - og:image made absolute and og:url added (the page's canonical), which WhatsApp and Facebook previews need;
 - robots.txt and sitemap.xml (six pages, hreflang pairs) at the site root;
 - .htaccess (nano.lv runs Apache): http and www go to https://karumnieki.lv with a 301, /phone/ (the old site's phone
@@ -143,6 +145,10 @@ def build_html(src: str, rel: pathlib.Path) -> str:
     if "<script>" in src or re.search(r"<script(?![^>]*\bsrc=)", src):
         raise ValueError(f"{rel}: an inline script, the comment remover does not expect one")
     html = re.sub(r"<!--.*?-->", "", src, flags=re.S)
+    # each marker is the last attribute of its start tag (lint checks it), so this leaves the tag as it was before
+    html = re.sub(r' data-edit="[^"<>]*"(?=>)', "", html)
+    if "data-edit" in html:
+        raise ValueError(f"{rel}: a data-edit marker that is not the last attribute of its tag")
     ver = asset_version()
     html, n = re.subn(r'((?:href|src)="(?:\.\./)*(?:' + "|".join(re.escape(x) for x in ASSETS) + r'))"', r'\1?v=' + ver + '"', html)
     if n < 3:

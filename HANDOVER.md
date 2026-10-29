@@ -35,7 +35,8 @@ on 8477 can stay open. Run it after every change. What it checks:
 
 | Check | What it proves |
 |---|---|
-| `lint.py` (with `parity.py`) | no long dashes, `lang` set, every image has alt, width, height and an existing file, Lora only for the quoted lines, no prices, and the English page matches the Latvian one (section 6) |
+| `lint.py` (with `parity.py`) | no long dashes, `lang` set, every image has alt, width, height and an existing file, Lora only for the quoted lines, no prices, the English page matches the Latvian one (section 6), and every `data-edit` marker has its row in `tools/editable.json` (section 7) |
+| `test_check_edit.py` | every rule of `check_edit.py` refuses its bad change and a valid edit passes (section 7) |
 | `shoot.mjs` | screenshots at 390, 768, 1024 and 1440; no sideways scroll, no console errors, no broken requests, nothing running off screen, the phone link and the hero buttons on the first screen, the sticky call bar after a scroll on a phone; it prints each page's height |
 | `lb-test.mjs` | the gallery lightbox at 1440 and 390, including the crop floors some photos must keep (`tools/slots.json`) |
 | `focus-pass.mjs` | every control reachable with Tab, with a visible focus ring, at 1440, 1024 and 390 |
@@ -100,7 +101,8 @@ installs Arial and Georgia first (`ttf-mscorefonts-installer`), because the size
 **The live files are built, never edited by hand.** `site/` stays the source, so the checks run on it.
 `python3 tools/build.py` writes the live site to `out/dist/site/`:
 - every comment out of the HTML, CSS and JS;
-- the `noindex` meta out of all six pages; the thank-you dialog's preview line out;
+- the `noindex` meta out of all six pages; the thank-you dialog's preview line out; the `data-edit` markers out
+  (section 7);
 - `og:image` absolute and `og:url` added; `robots.txt` and `sitemap.xml` (six pages, hreflang) at the root;
 - `.htaccess`: http and www to `https://karumnieki.lv` (301), the old `/phone/` home, `/.well-known/` left alone;
 - `FORM_ENDPOINT`, `TURNSTILE_SITEKEY` and `REVIEWS_ENDPOINT` set (`LIVE` at the top of `tools/build.py`);
@@ -155,14 +157,46 @@ Facebook show different rating numbers than the page).
 - Strings the script writes are in `STRINGS` at the top of `site/js/site.js`. Both pages carry the hreflang trio
   (lv, en, x-default = the Latvian root) and a self canonical.
 
-## 7. The repo
+## 7. Texts the owner may edit
+
+The owner changes his own words through an AI assistant, and a check refuses anything else. Three parts:
+
+- **Markers.** 70 texts carry `data-edit="<section>.<n>"` (the section id, then the place in page order) on the
+  same element in `site/index.html` and `site/en/index.html`: the section headings and prose, the bear lines, the
+  photo captions, the gallery captions (the tile's `data-caption`), the thank-you dialog. The marker is always the
+  last attribute of its start tag, and `build.py` removes it, so the live HTML is the same as without it. A text
+  with bold or line breaks inside is one marker; its tags stay as they are and only the words change. Everything
+  else is locked: the head, the menu, buttons, the form, the cookie banner, the policies, contacts and links, the
+  reviews block, images and alt texts, the hero facts line and the small labels above the headings.
+- **`tools/editable.json`.** One row per marker: a Latvian `label` the owner reads, `lv_max` and `en_max`
+  (characters: 1.3 times the text of 2026-10-29, at least 10 more), `attr: "data-caption"` for a gallery caption,
+  `fixed_numbers: true` where the numbers may not change (the capacity, in the Svinības heading and first
+  paragraph). The hero heading is capped at 50 / 59 characters: at 390x844 the hero buttons clear the cookie banner
+  by about 3 px, and in 120 trial headings made of the page's own words nothing shorter pushed them under it (in
+  English 2 of the 120 already wrap to a fourth line at 58 and 59 characters; the gate catches those).
+- **`tools/check_edit.py`** (Python standard library only). `python3 tools/check_edit.py` compares the working tree
+  with `main`; `--head <commit>` checks a commit through git alone, without checking it out; `--base` sets another
+  base. It refuses any other file; any change outside the marked texts; markup, or a straight quote in a caption;
+  web and e-mail addresses and phone numbers; long dashes; the euro sign or eur, euro, eiro; a text over its cap or
+  empty; invisible characters; the Latvian text changed without the English or the reverse; Latvian letters in
+  the English text; English the same as Latvian; numbers that differ between the two, or that changed in a
+  `fixed_numbers` text; and with `--head`, a commit not built on the base as it is now. One plain Latvian line per
+  refusal; exit 0 passes, 1 refuses, 2 could not run. The rows always come from the `editable.json` beside the
+  script.
+
+When you change the pages, a marked element keeps its marker. A new text the owner should edit gets a marker on
+both pages and a row; a removed one loses its row; lint fails until the two agree. `tools/test_check_edit.py` tests
+every rule on its own small pages, so it does not depend on the live wording.
+
+## 8. The repo
 
 ```
 HANDOVER.md        this file
 CLAUDE.md          loads this file and AGENTS.md for Claude Code
 AGENTS.md          working rules for an AI assistant in this repo
 site/              the website: index.html (LV), en/index.html (EN), the policy pages, css/, js/site.js, fonts/, img/
-tools/             the tests (section 2), build.py, serve.py, slots.json (which photo fills which slot), photo tools
+tools/             the tests (section 2), build.py, serve.py, slots.json (which photo fills which slot),
+                   editable.json and check_edit.py (section 7), photo tools
 form-worker/       the enquiry and reviews Worker (Cloudflare), its tests and its README
 package.json       Playwright and Lighthouse for the tests
 requirements.txt   Pillow and numpy, only for the photo tools
@@ -177,6 +211,6 @@ requirements.txt   Pillow and numpy, only for the photo tools
 - Secrets never go into this repo: the Worker's secrets live in Cloudflare (`npx wrangler secret put`), and the KV
   namespace id stays a placeholder in `form-worker/wrangler.toml` (its comment says why).
 
-## 8. Who to ask
+## 9. Who to ask
 The maintainers of this repo: for content, design, photos, anything that goes to the owner, and anything that leaves
 this folder or cannot be undone (deploying, DNS, accounts, messages).

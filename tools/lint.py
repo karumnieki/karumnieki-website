@@ -4,7 +4,8 @@ Checks: no U+2013 or U+2014 anywhere in site/ text files; <html lang="lv"> on in
 en/index.html (and the same on the four policy pages since 2026-10-04); on every page every <img> has alt, width, height and a src that exists, every srcset candidate exists,
 no image URL leaves the origin; the words "elektrisk" (Latvian page), "electric" (English page), "EUR" and the euro
 sign are absent; Lora is used only in CSS rules whose selector contains .bear. Then tools/parity.py: the two pages
-must be the same HTML with different words.
+must be the same HTML with different words; and check_edit.lint_problems: every data-edit marker has its row in
+tools/editable.json and the reverse.
 Usage: python lint.py   (exit 1 on any failure)
 """
 import io
@@ -12,6 +13,7 @@ import os
 import re
 import sys
 
+import check_edit
 import parity
 
 sys.stdout.reconfigure(encoding="utf-8")
@@ -91,11 +93,12 @@ if os.path.exists(css_path):
             problems.append("site.css: Lora outside .bear -> %s" % sel[:80])
 
 problems += parity.check()
+problems += check_edit.lint_problems(SITE)
 
 if problems:
     print("LINT FAIL (%d)" % len(problems))
     for p in problems:
         print("  - " + p)
     sys.exit(1)
-print("lint clean: %d text files, <img> tags %s, parity clean"
-      % (len(text_files), ", ".join("%s %d" % (k, v) for k, v in img_counts.items())))
+print("lint clean: %d text files, <img> tags %s, parity clean, %d editable texts in step with tools/editable.json"
+      % (len(text_files), ", ".join("%s %d" % (k, v) for k, v in img_counts.items()), len(check_edit.load_rows())))
